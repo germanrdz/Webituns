@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="77a262f1-317c-6541-8c74-cbb45cd74a0d" kpf_version="4" name="Webituns.kpf">
+<snippet id="a314771c-fba7-8341-9c25-9b45e98ecfca" idref="77a262f1-317c-6541-8c74-cbb45cd74a0d" indent_relative="false" keyboard_shortcut="" name="ReadMe" set_selection="false">
+This is a sample custom template for Komodo. The actual template file is:
+    /Users/GMac/Library/Application Support/KomodoEdit/5.2/project-templates/My Templates/Sample Custom Template.xml
+
+You can create your own templates with any content you wish.
+See "Custom Templates" in Komodo's on-line help for more details.
+!@#_currentPos!@#_anchor</snippet>
+<preference-set idref="77a262f1-317c-6541-8c74-cbb45cd74a0d">
+  <boolean id="import_live">1</boolean>
+</preference-set>
+</project>
