@@ -8,10 +8,51 @@ String.prototype.trim = function() { return this.replace(/^\s+|\s+$/g, ""); }
 
 var Application = function() {
 	
-	var queue_scroller = $("#queue_list .scroller_content");
+	var queue_scroller = $("#queue_list .scroller_content");	
+	var player_status_text = $("#player_status_text");
+	
 	var player_status;
 	
-	return {	
+	return {
+		getStatus: function() {
+			AjaxHelper.call("player/getStatus", {}, function(data) {
+
+				if (data.status == "playing") {
+					player_status_text.html(getCurrentSong());
+				}
+				else {
+					player_status_text.html("Click play to start");
+				}
+				
+			});
+		},
+		
+		playFile: function(filePath) {
+			alert(filePath);
+		},
+		
+		fillSongList: function() {			
+			AjaxHelper.call("player/getSongList", {}, function(data) {	
+				var playList = $("#songs .list ul");
+							
+				playList.html("");
+				$.each(data.songs, function(i, item) {
+					var listItem = $.LI({ }, link = $.A({}, item["Artist"] + " - " + item["Name"]));
+					
+					$(link).click(function() {
+						Application.playFile(item["Location"]);	
+					});
+					
+					$(listItem).hover(function() {
+						$(this).css("cursor", "pointer");
+					});
+					
+					playList.append(listItem);
+				});
+				
+			});
+		},
+					
 		msgError: function(msg, div) {
 			var template = '<div style="padding: 0pt 0.7em; margin-top: 20px;" class="ui-state-highlight ui-corner-all">';
 				template =+ '<p><span style="float: left; margin-right: 0.3em;" class="ui-icon ui-icon-info"/>{msg}</p>';
@@ -31,29 +72,13 @@ var Application = function() {
 		},
 	
 		getStatus: function() {
-			/*
-			loading();
-			
-			var html = $.ajax({
-				url: "controller.php",
-				data: "q=status",
-				async: false,
-				dataType: "text",
-				success: function(msg) {
-					end_loading();
-				}
-			}).responseText;
-		
-			return html;
-			*/
-			
 			AjaxHelper.call("player/getStatus", {}, function(data) {
-				
+
 				if (data.status == "playing") {
-					$("#player_status_text").html(getCurrentSong());
+					player_status_text.html(getCurrentSong());
 				}
 				else {
-					$("#player_status_text").html("Click play to start");
+					player_status_text.html("Click play to start");
 				}
 				
 			});
@@ -79,21 +104,8 @@ var Application = function() {
 			$("#loading_img").show();
 			$("#player_status_text").html("Working");
 		},
-	
-		fill_song_list: function() {
-			HTMLHelper.loading();
-			var html = $.ajax({
-				url: "controller.php",
-				data: "q=get_list",
-				async: false,
-				dataType: "text",
-				success: function(msg) {
-					$("#songs .list ul").html(msg);
-					HTMLHelper.end_loading();
-				}
-			});		
-		},
-	
+		
+		// deprecated, use playFile(filePath) instead
 		play: function(trackID) {
 			HTMLHelper.loading();
 			var html = $.ajax({
@@ -192,19 +204,9 @@ var Application = function() {
 				});			
 			});
 				
-			/*
-			var player_status = Application.getStatus();
+			player_status = Application.getStatus();
 
-			if (player_status.trim() == "playing") {
-				$("#player_status_text").html(getCurrentSong());
-			}
-			else {
-				$("#player_status_text").html("Click play to start");
-			}
-			*/
-
-			this.fill_song_list();
-		
+			this.fillSongList();
 		}
 	
 	};

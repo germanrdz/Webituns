@@ -9,9 +9,11 @@
 		<meta name ="author" content="German Rodriguez">
 
 		<link href="public/stylesheets/style.css" type="text/css" rel="stylesheet">
-		<link type="text/css" href="public/stylesheets/eggplant/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
 		
+		<link type="text/css" href="public/stylesheets/eggplant/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+				
 		<script type="text/javascript" src="public/scripts/jquery.min.js"></script>
+		<script type="text/javascript" src="public/scripts/jquery.dom.js"></script>
 		<script type="text/javascript" src="public/scripts/jquery.tools.min.js"></script>
 		<script type="text/javascript" src="public/scripts/jquery.ui.js"></script>
 		<script type="text/javascript" src="public/scripts/ajaxhelper.js"></script>

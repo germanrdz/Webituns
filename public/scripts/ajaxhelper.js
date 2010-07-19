@@ -7,30 +7,36 @@
 var AjaxHelper = {
 	loadingImage: $("#loading_img"),
 	playerStatus: $("#player_status_text"),
-	basePath = $("base").attr("href"),
+	basePath: $("base").attr("href") + "index.php/",
 	
 	call: function(url, data, callback) {
-		AjaxHelper.startLoading();
+		this.startLoading();
 		
 		$.ajax({
-			url: url,
+			url: this.basePath + url,
 			data: data,
 			async: false,
 			dataType: "json",
 			success: function(msg) {
+				
+				if (msg.error) {
+					alert(msg.error);
+					return;
+				}
+				
 				callback(msg);	
 			}		
 		});
 		
-		AjaxHelper.endLoading();
+		this.endLoading();
 	},
 	
 	endLoading: function() {
-		loadingImage.show();
-		playerStatus.html("Working");
+		this.loadingImage.show();
+		//playerStatus.html("Working");
 	},
 	
 	startLoading: function() {
-		loadingImage.hide();
+		this.loadingImage.hide();
 	}
 };
